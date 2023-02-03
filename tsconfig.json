@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@entities/*": ["entities/*"],
-      "@shared/*": ["shared/*"]
-  },
+      "@/*": [ "./src/*" ],
+      "@shared/*": [ "./src/shared/*" ],
+      "@entities/*": [ "./src/entities/*" ],
+    },
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
