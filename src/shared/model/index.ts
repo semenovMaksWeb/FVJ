@@ -1,0 +1,1 @@
+export { ObjectAny } from  "@shared/model/ObjectAny";
