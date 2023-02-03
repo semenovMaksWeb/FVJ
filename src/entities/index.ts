@@ -1,0 +1,1 @@
+export * as getDataTable from "@entities/getDataTable/index";
