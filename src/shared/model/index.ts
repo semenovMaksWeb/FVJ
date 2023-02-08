@@ -1,1 +1,1 @@
-export { ObjectAny } from  "@shared/model/ObjectAny";
+export type { ObjectAny } from  "@shared/model/ObjectAny";
