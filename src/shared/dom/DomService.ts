@@ -91,6 +91,26 @@ export function DomService() {
         element.innerHTML = value;
     }
 
+    /**
+    * @description elementAddEvent - сохранить события у элемента
+    * @param element - Element
+    * @param type - имя события
+    * @param fun - вызываемая функция
+    */
+    function elementAddEvent(element: Element, type: string, fun: () => void) {
+        element.addEventListener(type, fun);
+    }
+
+    /**
+    * @description elementDeleteEvent - удалить события у элемента
+    * @param element - Element
+    * @param type - имя события
+    * @param fun - вызываемая функция
+    */
+    function elementDeleteEvent(element: Element, type: string, fun: () => void) {
+        element.removeEventListener(type, fun);
+    }
+
     return {
 
         domElementGet,
@@ -105,7 +125,10 @@ export function DomService() {
         elementAttrRemove,
         elementAttrSave,
 
-        elementSaveInnerHTML
+        elementSaveInnerHTML,
+
+        elementAddEvent,
+        elementDeleteEvent
     }
 }
 
