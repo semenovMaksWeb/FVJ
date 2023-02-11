@@ -1,0 +1,1 @@
+export type DymanicNull<T> = T | null;
