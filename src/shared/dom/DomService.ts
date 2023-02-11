@@ -15,7 +15,7 @@ export function DomService() {
     *  @returns Element
     */
     function domElementCreate(tag: string): Element {
-       return document.createElement(tag);
+        return document.createElement(tag);
     }
 
     /**
@@ -26,7 +26,7 @@ export function DomService() {
     function domElementAppend(parent: Element, children: Element): void {
         parent.append(children);
     }
-    
+
     /**
     *  @description elementAddClass - добавить класс элементу
     *  @param element - Element
@@ -73,14 +73,23 @@ export function DomService() {
         element.setAttribute(name, value);
     }
 
-        /**
+    /**
     *  @description elementAttrSave - сохранить атрибут у элемента
+    *  @param element - Element
+    *  @param name - string
+    */
+    function elementAttrRemove(element: Element, name: string): void {
+        element.removeAttribute(name);
+    }
+
+    /**
+    *  @description elementSaveInnerText - сохранить текст у элемента
     *  @param element - Element
     *  @param value - string
     */
-        function elementAttrRemove(element: Element, name: string): void {
-            element.removeAttribute(name);
-        }
+    function elementSaveInnerHTML(element: Element, value: string): void {
+        element.innerHTML = value;
+    }
 
     return {
 
@@ -94,8 +103,9 @@ export function DomService() {
 
         elementAttrGet,
         elementAttrRemove,
-        elementAttrSave
+        elementAttrSave,
+
+        elementSaveInnerHTML
     }
 }
 
- 
