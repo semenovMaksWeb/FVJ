@@ -1,7 +1,9 @@
+import { Model } from "@/shared";
 import { ConfigFrontElementAttrModel } from "@entities/configFront/model/ConfigFrontElementAttrModel";
 
 export interface ConfigFrontElementModel {
     type: string;
-    attr: ConfigFrontElementAttrModel[];
-    children: ConfigFrontElementModel[];
+    innerHtml?: string;
+    attr:  Model.DymanicNull<ConfigFrontElementAttrModel[]>;
+    children: Model.DymanicNull<ConfigFrontElementModel[]>;
 }

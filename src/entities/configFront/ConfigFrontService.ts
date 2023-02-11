@@ -4,7 +4,7 @@ import { ConfigFrontModel } from "@entities/configFront/model/ConfigFrontModel"
 import { ConfigFrontElementModel } from "@entities/configFront/model/ConfigFrontElementModel";
 import { ConfigFrontElementAttrModel } from "@entities/configFront/model/ConfigFrontElementAttrModel";
 
-export class configFrontService {
+export class ConfigFrontService {
     private config: any;
     private domService = Dom.DomService();
 
@@ -66,16 +66,24 @@ export class configFrontService {
         }
     }
 
+    private generatorInnterText(innerText: string, element: Element) {
+        if (!innerText) {
+            return;
+        }
+        this.domService.elementSaveInnerHTML(element, innerText);
+    }
+
     /**
-     * обработка элемента
-     * @param configFrontElementModel 
-     * @param parent 
-     */
+    * обработка элемента
+    * @param configFrontElementModel 
+    * @param parent 
+    */
     private generatorElement(configFrontElementModel: ConfigFrontElementModel, parent: Element) {
         const element = this.createElement(configFrontElementModel.type);
         this.createElement(configFrontElementModel.type);
         this.createAttr(configFrontElementModel.attr, element);
         this.createChildren(element, configFrontElementModel.children);
+        this.generatorInnterText(configFrontElementModel.innerHtml, element);
         this.domService.domElementAppend(parent, element);
     }
 
