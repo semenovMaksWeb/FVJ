@@ -1,8 +1,9 @@
-import { Dom } from "@shared/index"
+import { Dom, Model } from "@shared/index"
 
 import { ConfigFrontModel } from "@entities/configFront/model/ConfigFrontModel"
 import { ConfigFrontElementModel } from "@entities/configFront/model/ConfigFrontElementModel";
 import { ConfigFrontElementAttrModel } from "@entities/configFront/model/ConfigFrontElementAttrModel";
+import { ConfigFrontElementEvent } from "@entities/configFront/model/ConfigFrontElementEvent";
 
 export class ConfigFrontService {
     private config: any;
@@ -30,7 +31,11 @@ export class ConfigFrontService {
     * @param element элемент к которому нужно добавить атрибуты
     * @returns void
     */
-    private createAttr(attrs: ConfigFrontElementAttrModel[], element: Element): void {
+    private createAttr(
+        element: Element,
+        attrs: Model.DymanicNull<ConfigFrontElementAttrModel[]>
+    ): void {
+
         if (!Array.isArray(attrs)) {
             throw new Error("Ошибка не валидно указан attr у элемента");
         }
@@ -49,12 +54,43 @@ export class ConfigFrontService {
         })
     }
 
+    private createEvent(element: Element, event: Model.DymanicNull<ConfigFrontElementEvent>) {
+        if (!event) {
+            return;
+        }
+        for (const name in event) {
+            for (const callback of event[name]) {
+                if (!callback.name) {
+                    throw ("Ошибка не указано имя функции");
+                }
+                element.addEventListener(name,
+                    /**
+                    * #TODO использовать shared callback 
+                    * тестовый функционал
+                    */
+                    () => {
+                        console.log(1);
+                    }
+                    /**
+                    * #TODO использовать shared callback 
+                    * тестовый функционал
+                    */
+                );
+            }
+        }
+    }
+
+
     /**
     * создание потомков 
     * @param element элемент куда нужно сохранить
     * @param children конфиг потомков
     */
-    private createChildren(element: Element, children: ConfigFrontElementModel[]) {
+    private createChildren(
+        element: Element,
+        children: Model.DymanicNull<ConfigFrontElementModel[]>
+    ) {
+
         if (children && !Array.isArray(children)) {
             throw new Error("Ошибка не валидно указан children");
         }
@@ -66,7 +102,7 @@ export class ConfigFrontService {
         }
     }
 
-    private generatorInnterText(innerText: string, element: Element) {
+    private generatorInnterText(element: Element, innerText?: string,) {
         if (!innerText) {
             return;
         }
@@ -81,9 +117,10 @@ export class ConfigFrontService {
     private generatorElement(configFrontElementModel: ConfigFrontElementModel, parent: Element) {
         const element = this.createElement(configFrontElementModel.type);
         this.createElement(configFrontElementModel.type);
-        this.createAttr(configFrontElementModel.attr, element);
+        this.createAttr(element, configFrontElementModel.attr);
         this.createChildren(element, configFrontElementModel.children);
-        this.generatorInnterText(configFrontElementModel.innerHtml, element);
+        this.generatorInnterText(element, configFrontElementModel.innerHtml);
+        this.createEvent(element, configFrontElementModel.event);
         this.domService.domElementAppend(parent, element);
     }
 

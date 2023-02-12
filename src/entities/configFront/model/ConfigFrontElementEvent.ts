@@ -1,10 +1,8 @@
-import { Model } from "@/shared";
-import { ConfigFrontElementEventEnum } from "@entities/configFront/enums/ConfigFrontElementEventEnum";
-import { ConfigFrontParamsModel } from "@entities/configFront/model/ConfigFrontParamsModel"
+import { Model } from "@/shared"
+import { ConfigFrontElementCallback } from "@entities/configFront/model/ConfigFrontElementCallback";
 
-export interface ConfigFrontElementEvent {
-    name: ConfigFrontElementEventEnum;
-    save: Model.DymanicNull<ConfigFrontParamsModel>;
-    params: Model.DymanicNull<Model.DymanicObject<ConfigFrontParamsModel>>
-}
 
+export type ConfigFrontElementEvent =
+    Model.DymanicNull<
+        Model.DymanicObject<ConfigFrontElementCallback[]>
+    >;

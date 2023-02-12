@@ -2,6 +2,6 @@ import { ConfigFrontParamsDataEnum } from "@/entities/configFront/enums/ConfigFr
 
 export interface ConfigFrontParamsModel {
     type: ConfigFrontParamsDataEnum; 
-    key: string[]; // ключи до значения
-    id: string; // id dom элемента
+    key?: string[]; // ключи до значения
+    id?: string; // id dom элемента
 }
