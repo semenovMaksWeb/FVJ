@@ -1,0 +1,1 @@
+export type DymanicObject<T> = { [key: string]: T };
