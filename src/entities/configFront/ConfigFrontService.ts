@@ -1,13 +1,16 @@
-import { Dom, Model } from "@shared/index"
-
+import { Dom, Model, Callback, Libs } from "@shared/index"
 import { ConfigFrontModel } from "@entities/configFront/model/ConfigFrontModel"
 import { ConfigFrontElementModel } from "@entities/configFront/model/ConfigFrontElementModel";
 import { ConfigFrontElementAttrModel } from "@entities/configFront/model/ConfigFrontElementAttrModel";
 import { ConfigFrontElementEvent } from "@entities/configFront/model/ConfigFrontElementEvent";
+import { ConfigFrontParamsModel } from "@entities/configFront//model/ConfigFrontParamsModel";
+
 
 export class ConfigFrontService {
     private config: any;
+    private callbackService = new Callback.CallbackService();
     private domService = Dom.DomService();
+    private searchDataDom = Libs.SearchData.SearchDataService();
 
     constructor(config: ConfigFrontModel) {
         this.config = config
@@ -54,6 +57,18 @@ export class ConfigFrontService {
         })
     }
 
+    /**
+    * поиск данных по конфигу
+    * @param params конфиг параметров
+    */
+    private searchDataConfig(
+        params: Model.DymanicNull<ConfigFrontParamsModel[]>
+    ) {
+        const res: Model.ObjectAny = {};
+        console.log(params);
+        return res;
+    }
+
     private createEvent(element: Element, event: Model.DymanicNull<ConfigFrontElementEvent>) {
         if (!event) {
             return;
@@ -63,23 +78,17 @@ export class ConfigFrontService {
                 if (!callback.name) {
                     throw ("Ошибка не указано имя функции");
                 }
-                element.addEventListener(name,
-                    /**
-                    * #TODO использовать shared callback 
-                    * тестовый функционал
-                    */
-                    () => {
-                        console.log(1);
-                    }
-                    /**
-                    * #TODO использовать shared callback 
-                    * тестовый функционал
-                    */
-                );
+                const data = this.searchDataConfig(callback.params);
+                const functionCustom = (event: Event) => {
+                    this.callbackService.start(callback.name)(
+                        event,
+                        data
+                    );
+                }
+                this.domService.elementAddEvent(element, name, functionCustom)
             }
         }
     }
-
 
     /**
     * создание потомков 
