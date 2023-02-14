@@ -1,3 +1,4 @@
+import { DymanicNull } from "../model";
 
 export function DomService() {
     /**
@@ -8,6 +9,15 @@ export function DomService() {
     function domElementGet(select: string): NodeListOf<Element> {
         return document.querySelectorAll(select);
     }
+
+        /**
+    *  @description domElementGetId - возвращает элемент по id
+    *  @param id - string
+    *  @returns HTMLElement | null
+    */
+        function domElementGetId(id: string): DymanicNull<HTMLElement>  {
+            return document.getElementById(id);
+        }
 
     /**
     *  @description domElementCreate - создает и возвращает element 
@@ -97,7 +107,7 @@ export function DomService() {
     * @param type - имя события
     * @param fun - вызываемая функция
     */
-    function elementAddEvent(element: Element, type: string, fun: () => void) {
+    function elementAddEvent(element: Element, type: string, fun: any) {
         element.addEventListener(type, fun);
     }
 
@@ -114,6 +124,7 @@ export function DomService() {
     return {
 
         domElementGet,
+        domElementGetId,
         domElementCreate,
         domElementAppend,
 
