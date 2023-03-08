@@ -1,12 +1,10 @@
+import { TypeNull } from "@shared/interface/TypeNull";
 import { IStyle, IStyleMap } from "./IStyleMap";
 
 /**
  * @class обработка стилей style
  */
 export class StyleMap {
-    /**
-    * Map style от back
-    */
 
     private style: IStyleMap;
     /**
@@ -14,11 +12,13 @@ export class StyleMap {
     */
     private readonly styleElement: CSSStyleDeclaration;
 
-    constructor(style: IStyle, styleElement: CSSStyleDeclaration) {
-        this.style = new Map(Object.entries(style));
+    constructor(styleElement: CSSStyleDeclaration, style: TypeNull<IStyle>) {
+        this.style = new Map();
+        if (style) {
+            this.style = new Map(Object.entries(style));
+        }
         this.styleElement = styleElement;
         for (const [key, value] of this.style.entries()) {
-            console.log(key, value);
             this.set(key, value);
         }
     }
@@ -47,7 +47,7 @@ export class StyleMap {
      * @test
      * @returns объект стили
      */
-    get() {
+    et() {
         return this.style;
     }
 }

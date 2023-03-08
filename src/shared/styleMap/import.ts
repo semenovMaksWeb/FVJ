@@ -1,2 +1,2 @@
-export type { IStyleMap, IStyle } from "@/shared/styleMap/IStyleMap";
-export { StyleMap } from "@/shared/styleMap/StyleMap"
+export type { IStyleMap, IStyle } from "@/shared/StyleMap/IStyleMap";
+export { StyleMap } from "@/shared/StyleMap/StyleMap"
