@@ -11,7 +11,7 @@ export class BaseElement {
     /**
     * первичный ключ элемента
     */
-    private readonly id: number;
+    private readonly id: string;
 
     /**
     * style для создаваемого dom-element 
@@ -24,12 +24,13 @@ export class BaseElement {
     private readonly attribute: AttributeMap;
 
     constructor(
-        id: number,
+        id: string,
         tag: string,
         parent: HTMLElement,
         className: TypeNull<string>,
         style: TypeNull<IStyle>,
-        attribute: TypeNull<IAttribute>
+        attribute: TypeNull<IAttribute>,
+        text: TypeNull<string>
     ) {
         if (!id) {
             throw ("Не указан обязательный ключ");
@@ -38,32 +39,35 @@ export class BaseElement {
         // сохранение уникального ключа
         this.id = id;
 
-        /**
-        * если parent(dom-element) не существует
-        */
+
+        //если parent(dom-element) не существует
         if (!parent) {
             throw ("Parent не существует");
         }
 
-        /** создаем dom-element */
+        // создаем dom-element
         this.elem = document.createElement(tag);
-        // создаем экземпляр класса для обработки style
+
+        // создаем экземпляр классов
         this.style = new StyleMap(this.elem.style, style);
         this.attribute = new AttributeMap(this.elem, attribute);
 
-        /**
-        * если классов не существует
-        */
+        // обработка текста
+        if (text) {
+            this.elem.innerHTML = text;
+        }
+
+
+        // если классов не существует
         if (className) {
             this.elem.classList.add(className);
         }
 
         // сохранить id element
-        this.elem.setAttribute("id", this.id.toString());
+        this.elem.setAttribute("id", this.id);
 
         // добавление элемента в верстку
         parent.append(this.elem);
-
     }
 
     /**
@@ -86,7 +90,7 @@ export class BaseElement {
     get idGet() {
         return this.id;
     }
-    
+
     /**
     * вернуть attribute dom-element
     */
