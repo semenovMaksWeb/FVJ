@@ -1,0 +1,1 @@
+export { DynamicImport } from "@shared/DynamicImport/DynamicImport"
